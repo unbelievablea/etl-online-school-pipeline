@@ -1,33 +1,37 @@
-# Проект 3-го спринта
+# ETL-пайплайн для онлайн-школы
 
-### Описание
-Репозиторий предназначен для сдачи проекта 3-го спринта
+Учебный проект по построению пайплайна обработки данных с использованием Airflow и миграций базы данных.
 
-### Как работать с репозиторием
-1. В вашем GitHub-аккаунте автоматически создастся репозиторий `de-project-sprint-3` после того, как вы привяжете свой GitHub-аккаунт на Платформе.
-2. Скопируйте репозиторий на свой локальный компьютер, в качестве пароля укажите ваш `Access Token` (получить нужно на странице [Personal Access Tokens](https://github.com/settings/tokens)):
-	* `git clone https://github.com/{{ username }}/de-project-sprint-3.git`
-3. Перейдите в директорию с проектом: 
-	* `cd de-project-sprint-3`
-4. Выполните проект и сохраните получившийся код в локальном репозитории:
-	* `git add .`
-	* `git commit -m 'my best commit'`
-5. Обновите репозиторий в вашем GutHub-аккаунте:
-	* `git push origin main`
+## Задача
 
-### Структура репозитория
-1. Папка `migrations` хранит файлы миграции. Файлы миграции должны быть с расширением `.sql` и содержать SQL-скрипт обновления базы данных.
-2. В папке `src` хранятся все необходимые исходники: 
-    * Папка `dags` содержит DAG's Airflow.
+Организовать регулярную выгрузку, трансформацию и загрузку данных об активности студентов онлайн-школы в витрину данных.
 
-### Как запустить контейнер
-Запустите локально команду:
+## Технологии
 
-```
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Apache Airflow](https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+## Что сделано
+
+- Спроектирован DAG в Apache Airflow с задачами на извлечение, трансформацию и загрузку (ETL)
+- Написаны SQL-миграции для обновления схемы базы данных
+- Настроено Docker-окружение для локального запуска (PostgreSQL, Airflow, VSCode)
+- Оркестрация зависимостей между задачами в DAG
+
+## Результат
+
+- Пайплайн автоматически обновляет витрину данных каждый час
+- Обрабатываются инкрементальные обновления (только новые данные)
+- Миграции позволяют версионировать изменения в БД
+
+## Как запустить
+
+```bash
+# Запуск контейнера с окружением
 docker run -d --rm -p 3000:3000 -p 15432:5432 --name=de-project-sprint-3-server cr.yandex/crp1r8pht0n0gl25aug1/project-sprint-3:latest
-```
 
-После того как запустится контейнер, у вас будут доступны:
-1. Visual Studio Code
-2. Airflow
-3. Database
+# После запуска доступны:
+# - Airflow: http://localhost:3000
+# - PostgreSQL: localhost:15432
